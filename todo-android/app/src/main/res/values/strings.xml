@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SpinnerSample</string>
+    <string-array name="list">
+        <item>height</item>
+        <item>middle</item>
+        <item>low</item>
+    </string-array>
+</resources>

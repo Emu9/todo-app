@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".InsertActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"/>
+
+    <EditText
+        android:id="@+id/taskNm"
+        android:layout_width="360dp"
+        android:layout_height="70dp"
+        android:layout_marginTop="30dp"
+        android:hint="タスク名"
+        android:textSize="30dp"
+        android:maxLength="10"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:layout_gravity="center"
+        android:inputType="text"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:text="開始日"
+            android:layout_marginStart="35dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:text="開始時間"
+            android:layout_marginStart="35dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <DatePicker
+            android:id="@+id/taskStartDt"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:calendarViewShown="false"
+            android:datePickerMode="spinner" />
+
+        <TimePicker
+            android:id="@+id/taskStartTm"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:timePickerMode="spinner" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:text="終了日"
+            android:layout_marginStart="35dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:text="終了時間"
+            android:layout_marginStart="35dp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <DatePicker
+            android:id="@+id/taskEndDt"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            android:layout_width="200dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"/>
+
+        <TimePicker
+            android:id="@+id/taskEndTm"
+            android:timePickerMode="spinner"
+            android:layout_width="150dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"/>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textSize="20dp"
+        android:text="メモ"
+        android:layout_marginStart="35dp"
+        android:textColor="@color/black"/>
+
+    <EditText
+        android:id="@+id/editDes"
+        android:layout_width="350dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="35dp"
+        android:inputType="textMultiLine"
+        android:gravity="left|top"
+        android:background="@drawable/rounded_edittext"/>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:textSize="20dp"
+            android:text="優先度"
+            android:layout_marginStart="35dp"
+            android:textColor="@color/black" />
+
+        <Spinner
+            android:id="@+id/taskPri"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:entries="@array/list"/>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:textSize="20dp"
+            android:text="通知"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/black"/>
+
+        <Switch
+            android:id="@+id/taskNot"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:checked="false"/>
+
+    </LinearLayout>
+
+</LinearLayout>
