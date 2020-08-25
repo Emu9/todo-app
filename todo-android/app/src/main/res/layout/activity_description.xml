@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".DescriptionActivity">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"/>
+
+    <TextView
+        android:id="@+id/taskStartDt"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:textSize="25dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="2020/04/08"
+        android:textColor="@color/black"/>
+    <TextView
+        android:id="@+id/taskNm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="開始日"
+        android:textColor="@color/black"
+        android:textSize="40dp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:text="開始時刻"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:text="終了時間"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <TextView
+            android:id="@+id/taskStartTm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="12:00"
+            android:textSize="40dp"/>
+
+        <TextView
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text=">"
+            android:textSize="40dp"/>
+
+        <TextView
+            android:id="@+id/taskEndTm"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="13:00"
+            android:textSize="40dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textSize="20dp"
+            android:text="メモ"
+            android:layout_marginStart="50dp"
+            android:textColor="@color/black"/>
+
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/taskDes"
+        android:layout_width="340dp"
+        android:layout_height="330dp"
+        android:layout_marginStart="45dp"
+        android:layout_marginBottom="35dp"
+        android:inputType="textMultiLine"
+        android:gravity="left|top"
+        android:background="@drawable/rounded_edittext"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="70dp"
+            android:layout_height="30dp"
+            android:textSize="20dp"
+            android:text="優先度"
+            android:layout_marginStart="50dp"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:id="@+id/taskPri"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:text="優先度"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="30dp"
+            android:textSize="20dp"
+            android:text="通知"
+            android:layout_marginStart="5dp"
+            android:textColor="@color/black"/>
+
+        <Switch
+            android:id="@+id/taskNot"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:clickable="false"/>
+
+    </LinearLayout>
+
+</LinearLayout>

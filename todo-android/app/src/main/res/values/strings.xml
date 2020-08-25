@@ -5,4 +5,7 @@
         <item>middle</item>
         <item>low</item>
     </string-array>
+    <string name="menu_msg0">編集</string>
+    <string name="menu_msg1">コピー</string>
+    <string name="menu_msg2">削除</string>
 </resources>

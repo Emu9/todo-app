@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -18,7 +19,7 @@ import okhttp3.Request
 
 
 class MainFragment : Fragment() {
-    val url = "http://10.0.2.2:8000/api/todo"
+    private val url = "http://10.0.2.2:8000/api/todo"
 
     companion object{
         fun newInstance() = MainFragment()
@@ -38,7 +39,7 @@ class MainFragment : Fragment() {
     private fun onParallelGetButtonClick() = GlobalScope.launch(Dispatchers.Main) {
         val http = HttpUtil()
 
-        withContext(Dispatchers.Default) { http.httpGet1("$url") }.let {
+        withContext(Dispatchers.Default) { http.httpGet1(url) }.let {
             val result = Json.parse(it).asObject()
 
             val data = result.get("data").asArray()
@@ -53,25 +54,23 @@ class MainFragment : Fragment() {
             }
             listView.adapter = TasksAdapter(tasks, itemListener)
 
-            listView.setOnItemClickListener {parent, view, position, id ->
-
-                // 項目の TextView を取得
-                Toast.makeText(activity, "押されたよ！"+ id.toInt() + tasks[id.toInt()].id, Toast.LENGTH_SHORT).show()
+            listView.setOnItemClickListener { _, _, _, id ->
+                val taskId = id.toInt()
+                val intent = Intent(activity, DescriptionActivity::class.java)
+                intent.putExtra("id", tasks[taskId].id)
+                startActivity(intent)
             }
+            true
         }
     }
 
-
-
-    val itemListener = object : TaskItemListener {
+    private val itemListener = object : TaskItemListener {
         override fun onDeleteClick(task: Task) {
             Toast.makeText(activity, "onDeleteClick : " + task.description + task.id, Toast.LENGTH_SHORT).show()
         }
     }
 
     private class TasksAdapter(private val tasks: List<Task>, private val listener: TaskItemListener): BaseAdapter() {
-        private val stateColors = listOf(R.color.todo, R.color.doing, R.color.done)
-
         override fun getCount() = tasks.size
 
         override fun getItem(i: Int) = tasks[i]
@@ -106,8 +105,8 @@ class MainFragment : Fragment() {
     }
 
     class HttpUtil {
-        val headerKey = "H-API-KEY"
-        val headerValue = "AUTH_API_KEY_20181203"
+        private val headerKey = "H-API-KEY"
+        private val headerValue = "AUTH_API_KEY_20181203"
 
         fun httpGet1(url: String): String? {
             val client = OkHttpClient()

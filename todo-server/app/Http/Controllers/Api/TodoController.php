@@ -39,7 +39,7 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-      return new UserResource(Todo::find($id));
+      return new TodoResource(Todo::find($id));
     }
 
     /**
@@ -62,7 +62,7 @@ class TodoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
       $id->update($request->all());
       return redirect('api/todo');
