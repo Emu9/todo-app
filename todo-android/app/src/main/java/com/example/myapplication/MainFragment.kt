@@ -5,18 +5,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.BaseAdapter
+import android.widget.ImageView
+import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.eclipsesource.json.Json
 import kotlinx.android.synthetic.main.fragment_main.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-
-
+import kotlinx.coroutines.*
+import okhttp3.*
+import org.json.JSONObject
 
 class MainFragment : Fragment() {
     private val url = "http://10.0.2.2:8000/api/todo"
@@ -32,7 +30,6 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         onParallelGetButtonClick()
     }
 
@@ -65,8 +62,28 @@ class MainFragment : Fragment() {
     }
 
     private val itemListener = object : TaskItemListener {
-        override fun onDeleteClick(task: Task) {
-            Toast.makeText(activity, "onDeleteClick : " + task.description + task.id, Toast.LENGTH_SHORT).show()
+        override fun onDeleteClick(task: Task): Job = GlobalScope.launch(Dispatchers.Main){
+
+                val http = HttpUtil()
+                val json = JSONObject()
+                json.put("compFlag", 1)
+                withContext(Dispatchers.Default){ http.httpPut1(url + "/" +task.id, json) }?.let{
+                    val responseCode: Int = it.code()
+                    println("responseCode: $responseCode")
+
+                    if (!it.isSuccessful) {
+                        Toast.makeText(
+                            activity,
+                            "error!!",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                    if (it.body() != null) {
+                        val intent = Intent(activity, MainActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)
+                    }
+                }
         }
     }
 
@@ -97,11 +114,10 @@ class MainFragment : Fragment() {
             }
             return rowView
         }
-
     }
 
     interface TaskItemListener {
-        fun onDeleteClick(task: Task)
+        fun onDeleteClick(task: Task): Job
     }
 
     class HttpUtil {
@@ -119,6 +135,16 @@ class MainFragment : Fragment() {
             return response.body()?.string()
         }
 
+        fun httpPut1(url: String, json: JSONObject):Response? {
+            val client = OkHttpClient()
+            val mimeType: MediaType? = MediaType.parse("application/json; charset=utf-8")
+            val requestBody = RequestBody.create(mimeType, json.toString())
+            val request = Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build()
 
+            return client.newCall(request).execute()
+        }
     }
 }

@@ -16,7 +16,8 @@ class TodoController extends Controller
      */
     public function index()
     {
-      return TodoResource::collection(Todo::all());
+      return TodoResource::collection(Todo::all()->where('compFlag', 0));
+      
     }
 
     /**
@@ -51,20 +52,14 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-      $id->update($request->all());
+      $todo = Todo::find($id);
+      $todo -> update($request->all());
       return redirect("api/todo/".$id);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Request $request, $id)
+    public function deleteData(Request $request)
     {
-      $id->update($request->all());
-      return redirect('api/todo');
+      $todo = Todo::find($request->input('id'));
+      $todo->delete();
     }
 }

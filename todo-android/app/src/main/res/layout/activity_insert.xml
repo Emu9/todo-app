@@ -168,20 +168,6 @@
             android:layout_height="wrap_content"
             android:entries="@array/list"/>
 
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:textSize="20dp"
-            android:text="通知"
-            android:layout_marginStart="5dp"
-            android:textColor="@color/black"/>
-
-        <Switch
-            android:id="@+id/taskNot"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:checked="false"/>
-
     </LinearLayout>
 
 </LinearLayout>

@@ -4,8 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 const val MY_REQUEST_CODE = 1
@@ -17,6 +20,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val today = findViewById<TextView>(R.id.today)
+        val current = LocalDate.now()
+        val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd")
+        today.text = current.format(formatter)
 
         toolbar.also {
             it.setTitleTextColor(getColor(R.color.white))

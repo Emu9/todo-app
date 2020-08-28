@@ -31,6 +31,7 @@ class InsertActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
+        var taskId = 0
         val startDt = findViewById<DatePicker>(R.id.taskStartDt)
         val startTm = findViewById<TimePicker>(R.id.taskStartTm)
         val endDt = findViewById<DatePicker>(R.id.taskEndDt)
@@ -38,7 +39,6 @@ class InsertActivity : AppCompatActivity() {
         val name = findViewById<EditText>(R.id.taskNm)
         val des = findViewById<EditText>(R.id.editDes)
         val pri = findViewById<Spinner>(R.id.taskPri)
-        val not = findViewById<Switch>(R.id.taskNot)
         val error1 = findViewById<TextView>(R.id.error_msg1)
         val error2 = findViewById<TextView>(R.id.error_msg2)
         val stDate: Calendar = Calendar.getInstance()
@@ -46,34 +46,39 @@ class InsertActivity : AppCompatActivity() {
         val edDate: Calendar = Calendar.getInstance()
         val edTime: Calendar = Calendar.getInstance()
         val isEmpty = intent.extras?.isEmpty
+        val request = intent
         var taskStartDt: String?
         var taskEndDt: String?
         var taskStartTm: String?
         var taskEndTm: String?
         var flag: Boolean? = null
 
-        if (!isEmpty!!) {
+        if (isEmpty != null) {
             flag = true
 
-            name.setText(intent.extras?.get("taskNm").toString())
-            val arrDt = intent.extras?.get("taskStDt").toString().split("/")
-            startDt.updateDate(arrDt[0].toInt(),arrDt[1].toInt(),arrDt[2].toInt())
+            taskId = request.getStringExtra("taskId").toInt()
+            name.setText(request.getStringExtra("taskNm"))
+            val arrStDt = request.getStringExtra("taskStDt").split("/")
+            startDt.updateDate(arrStDt[0].toInt(),arrStDt[1].toInt(),arrStDt[2].toInt())
 
-            val arrStTm = intent.extras?.get("taskStTm").toString().split(":")
+            val arrStTm = request.getStringExtra("taskStTm").split(":")
             startTm.hour = arrStTm[0].toInt()
             startTm.minute = arrStTm[1].toInt()
             startTm.setIs24HourView(true)
 
-            val arrEdTm = intent.extras?.get("taskEdTm").toString().split(":")
+            val arrEdDt = request.getStringExtra("taskEdDt").split("/")
+            endDt.updateDate(arrEdDt[0].toInt(),arrEdDt[1].toInt(),arrEdDt[2].toInt())
+
+            val arrEdTm = request.getStringExtra("taskEdTm").split(":")
             endTm.hour = arrEdTm[0].toInt()
             endTm.minute = arrEdTm[1].toInt()
             endTm.setIs24HourView(true)
 
-            des.setText(intent.extras?.get("taskDs").toString())
-            pri.setSelection(intent.extras?.get("taskPri")as Int)
-            not.isChecked = intent.extras?.get("taskNot") as Boolean
+            des.setText(request.getStringExtra("taskDs"))
+            pri.setSelection(request.getStringExtra("taskPri").toInt())
 
         } else {
+            flag = false
             startDt.updateDate(2020, 8, 21)
             startTm.hour = 12
             startTm.minute = 0
@@ -86,8 +91,6 @@ class InsertActivity : AppCompatActivity() {
         }
 
         toolbar.setOnMenuItemClickListener {
-            if(it.itemId == R.id.checked){
-
                 val taskNm = name.text.toString()
 
                 val stDay = startDt.dayOfMonth
@@ -114,14 +117,12 @@ class InsertActivity : AppCompatActivity() {
 
                 val taskDes = des.text.toString()
                 val taskPri = pri.selectedItemId
-                val taskNot = not.isChecked
-
 
                 if (taskNm.isEmpty()) {
                     error1.text = "文字を入力してください。"
-                }else if (!stTime.after(edTime)) {
+                }else if (!stTime.before(edTime)) {
                     error2.text = "開始日,開始時間を確認してください。"
-                }else if (!stDate.after(edDate) && stDate != edDate) {
+                }else if (!stDate.before(edDate) && stDate != edDate) {
                     error2.text = "開始日,開始時間を確認してください。"
                 }else {
                     val json = JSONObject()
@@ -132,13 +133,11 @@ class InsertActivity : AppCompatActivity() {
                     json.put("endDate", "$taskEndDt")
                     json.put("endTime", "$taskEndTm")
                     json.put("priorityType", taskPri)
-                    json.put("notifyFlag", taskNot)
                     json.put("compFlag", 0)
-                    json.put("deleteFlag", 0)
 
-                    onInsertButtonClick(json, flag)
+                    onInsertButtonClick(json, flag, taskId)
                 }
-            }
+
             true
         }
     }
@@ -161,9 +160,9 @@ class InsertActivity : AppCompatActivity() {
         return super.onCreateOptionsMenu(menu)
     }
 
-    private fun onInsertButtonClick(json: JSONObject, flag: Boolean?) = GlobalScope.launch(Dispatchers.Main) {
+    private fun onInsertButtonClick(json: JSONObject, flag: Boolean?, id: Int?) = GlobalScope.launch(Dispatchers.Main) {
 
-        withContext(Dispatchers.Default) { if (flag!!) http.httpPut1(url, json) else http.httpPost1(url, json)}?.let {
+        withContext(Dispatchers.Default) { if (flag!!) http.httpPut1("$url/$id", json) else http.httpPost1(url, json)}?.let {
             val responseCode: Int = it.code()
             println("responseCode: $responseCode")
 

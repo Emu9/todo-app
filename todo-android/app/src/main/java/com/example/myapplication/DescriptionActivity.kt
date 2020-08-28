@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Switch
+import android.widget.Spinner
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,9 +15,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
+import org.json.JSONObject
 
 
 class DescriptionActivity : AppCompatActivity() {
@@ -37,11 +36,11 @@ class DescriptionActivity : AppCompatActivity() {
 
         val taskNm = findViewById<TextView>(R.id.taskNm)
         val taskStDt = findViewById<TextView>(R.id.taskStartDt)
+        val taskEdDt = findViewById<TextView>(R.id.taskEndDt)
         val taskStTm = findViewById<TextView>(R.id.taskStartTm)
         val taskEdTm = findViewById<TextView>(R.id.taskEndTm)
         val taskDs = findViewById<TextView>(R.id.taskDes)
-        val taskPri  = findViewById<TextView>(R.id.taskPri)
-        val taskNot  = findViewById<Switch>(R.id.taskNot)
+        val taskPri  = findViewById<Spinner>(R.id.taskPri)
 
         val text = intent.extras?.get("id")
         onParallelGetButtonClick(text as Int)
@@ -49,20 +48,20 @@ class DescriptionActivity : AppCompatActivity() {
         toolbar.setOnMenuItemClickListener { it ->
             if (it.itemId == R.id.action_settings0) {
                 val intent = Intent(this@DescriptionActivity, InsertActivity::class.java)
+                intent.putExtra("taskId", text.toString())
                 intent.putExtra("taskNm", taskNm.text.toString())
                 intent.putExtra("taskStDt", taskStDt.text.toString())
+                intent.putExtra("taskEdDt", taskEdDt.text.toString())
                 intent.putExtra("taskStTm", taskStTm.text.toString())
                 intent.putExtra("taskEdTm", taskEdTm.text.toString())
                 intent.putExtra("taskDs", taskDs.text.toString())
-                intent.putExtra("taskPri", taskPri.id)
-                intent.putExtra("taskNot", taskNot.isChecked)
+                intent.putExtra("taskPri", taskPri.selectedItemId.toString())
                 startActivity(intent)
-                finish()
-//            } else if (it.itemId == R.id.action_settings1){
-
             } else if (it.itemId == R.id.action_settings2){
+                val json = JSONObject()
+                json.put("id", text.toString())
                 GlobalScope.launch(Dispatchers.Main) {
-                    withContext(Dispatchers.Default) { http.httpDelete1("$url/$text") }?.let {
+                    withContext(Dispatchers.Default) { http.httpPost2("$url/delete", json) }?.let {
                         val responseCode: Int = it.code()
                         println("responseCode: $responseCode")
 
@@ -108,22 +107,22 @@ class DescriptionActivity : AppCompatActivity() {
     private fun onParallelGetButtonClick(id: Int) = GlobalScope.launch(Dispatchers.Main) {
         val taskNm = findViewById<TextView>(R.id.taskNm)
         val taskStDt = findViewById<TextView>(R.id.taskStartDt)
+        val taskEdDt = findViewById<TextView>(R.id.taskEndDt)
         val taskStTm = findViewById<TextView>(R.id.taskStartTm)
         val taskEdTm = findViewById<TextView>(R.id.taskEndTm)
         val taskDs = findViewById<TextView>(R.id.taskDes)
-        val taskPri  = findViewById<TextView>(R.id.taskPri)
-        val taskNot  = findViewById<Switch>(R.id.taskNot)
-        val stateTexts: Array<String> = resources.getStringArray(R.array.list)
+        val taskPri  = findViewById<Spinner>(R.id.taskPri)
 
         withContext(Dispatchers.Default) { http.httpGet2("$url/$id") }.let {
             val result = Json.parse(it).asObject()
+
             taskNm.text = (result["data"] as JsonObject).get("taskName").asString()
             taskStDt.text = (result["data"] as JsonObject).get("startDate").asString()
+            taskEdDt.text = (result["data"] as JsonObject).get("endDate").asString()
             taskStTm.text = (result["data"] as JsonObject).get("startTime").asString()
             taskEdTm.text = (result["data"] as JsonObject).get("endTime").asString()
             taskDs.text = if (!result["data"].asObject().get("taskDes").isNull) (result["data"] as JsonObject).get("taskDes").asString() else null
-            taskPri.text = stateTexts[(result["data"] as JsonObject).get("priorityType").asInt()]
-            taskNot.showText = ((result["data"] as JsonObject).get("notifyFlag")).isBoolean
+            taskPri.setSelection((result["data"] as JsonObject).get("priorityType").asInt())
         }
     }
 
@@ -147,11 +146,13 @@ class DescriptionActivity : AppCompatActivity() {
             return response.body()?.string()
         }
 
-        fun httpDelete1(url: String): Response? {
+        fun httpPost2(url: String, json: JSONObject): Response? {
             val client = OkHttpClient()
+            val mimeType: MediaType? = MediaType.parse("application/json; charset=utf-8")
+            val requestBody = RequestBody.create(mimeType, json.toString())
             val request = Request.Builder()
                 .url(url)
-                .delete()
+                .post(requestBody)
                 .build()
 
             return client.newCall(request).execute()
