@@ -13,6 +13,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import okhttp3.*
 import org.json.JSONObject
+import java.time.LocalDate
 import java.util.*
 
 
@@ -79,12 +80,16 @@ class InsertActivity : AppCompatActivity() {
 
         } else {
             flag = false
-            startDt.updateDate(2020, 8, 21)
+            val current = LocalDate.now()
+            val year = current.year
+            val month = current.monthValue
+            val day = current.dayOfMonth
+            startDt.updateDate(year, month, day)
             startTm.hour = 12
             startTm.minute = 0
             startTm.setIs24HourView(true)
 
-            endDt.updateDate(2020, 8, 21)
+            endDt.updateDate(year, month, day)
             endTm.hour = 12 + 1
             endTm.minute = 0
             endTm.setIs24HourView(true)

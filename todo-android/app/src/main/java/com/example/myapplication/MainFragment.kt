@@ -9,6 +9,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.eclipsesource.json.Json
 import kotlinx.android.synthetic.main.fragment_main.*
@@ -25,7 +26,6 @@ class MainFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_main, container, false)
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -88,6 +88,8 @@ class MainFragment : Fragment() {
     }
 
     private class TasksAdapter(private val tasks: List<Task>, private val listener: TaskItemListener): BaseAdapter() {
+        private val stateTexts = listOf(R.string.height, R.string.middle, R.string.low)
+        private val stateColors = listOf(R.color.height, R.color.middle, R.color.low)
         override fun getCount() = tasks.size
 
         override fun getItem(i: Int) = tasks[i]
@@ -106,7 +108,8 @@ class MainFragment : Fragment() {
             }
 
             rowView.findViewById<TextView>(R.id.taskPri).apply {
-                text = task.priority.toString()
+                text = context.getString(stateTexts[task.priority])
+                setTextColor(ContextCompat.getColor(context, stateColors[task.priority]))
             }
 
             rowView.findViewById<ImageView>(R.id.taskCompButton).setOnClickListener {

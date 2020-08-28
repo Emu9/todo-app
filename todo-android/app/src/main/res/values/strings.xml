@@ -1,10 +1,13 @@
 <resources>
     <string name="app_name">SpinnerSample</string>
     <string-array name="list">
-        <item>height</item>
-        <item>middle</item>
-        <item>low</item>
+        <item name="height">HEIGHT</item>
+        <item name="middle">MIDDLE</item>
+        <item name="low">LOW</item>
     </string-array>
+    <string name="height">HEIGHT</string>
+    <string name="middle">MIDDLE</string>
+    <string name="low">LOW</string>
     <string name="menu_msg0">編集</string>
     <string name="menu_msg1">コピー</string>
     <string name="menu_msg2">削除</string>

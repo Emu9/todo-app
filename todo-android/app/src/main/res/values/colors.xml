@@ -9,7 +9,7 @@
     <color name="error">#FF0000</color>
 
 
-    <color name="todo">#F80</color>
-    <color name="doing">#08F</color>
-    <color name="done">#888</color>
+    <color name="height">#F80</color>
+    <color name="middle">#08F</color>
+    <color name="low">#888</color>
 </resources>

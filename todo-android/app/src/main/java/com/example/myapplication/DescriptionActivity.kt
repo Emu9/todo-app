@@ -33,6 +33,7 @@ class DescriptionActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
 
         val taskNm = findViewById<TextView>(R.id.taskNm)
         val taskStDt = findViewById<TextView>(R.id.taskStartDt)

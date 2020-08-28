@@ -25,7 +25,6 @@
             android:textSize="25dp"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:text="2020/04/08"
             android:textColor="@color/black"/>
 
         <TextView
@@ -43,9 +42,7 @@
             android:layout_marginTop="15dp"
             android:layout_weight="1"
             android:textSize="25dp"
-
             android:gravity="center"
-            android:text="2020/04/08"
             android:textColor="@color/black"/>
     </LinearLayout>
     <TextView
@@ -53,7 +50,6 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="開始日"
         android:textColor="@color/black"
         android:textSize="40dp"/>
 
@@ -92,7 +88,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/black"
-            android:text="12:00"
             android:textSize="40dp"/>
 
         <TextView
@@ -109,7 +104,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/black"
-            android:text="13:00"
             android:textSize="40dp"/>
 
     </LinearLayout>
@@ -158,20 +152,6 @@
             android:gravity="center"
             android:entries="@array/list"
             android:textColor="@color/black"/>
-
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="30dp"
-            android:textSize="20dp"
-            android:text="通知"
-            android:layout_marginStart="5dp"
-            android:textColor="@color/black"/>
-
-        <Switch
-            android:id="@+id/taskNot"
-            android:layout_width="80dp"
-            android:layout_height="wrap_content"
-            android:clickable="false"/>
 
     </LinearLayout>
 

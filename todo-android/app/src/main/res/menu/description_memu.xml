@@ -6,10 +6,6 @@
         android:title="@string/menu_msg0"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_settings1"
-        android:title="@string/menu_msg1"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_settings2"
         android:title="@string/menu_msg2"
         app:showAsAction="never" />
