@@ -24,9 +24,6 @@ class TodoResource extends JsonResource
           'endDate' => Carbon::parse($this->endDate)->format('Y/m/d'),
           'endTime' => Carbon::parse($this->endTime)->format('H:i'),
           'priorityType' => $this->priorityType,
-          'notifyFlag' => $this->notifyFlag,
-          'compFlag' => $this->compFlag,
-          'deleteFlag' => $this->deleteFlag,
         ];
     }
 }

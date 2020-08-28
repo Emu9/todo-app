@@ -19,5 +19,6 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::group(['middleware' => ['api']], function(){
-  Route::resource('todo', 'Api\TodoController', ['except' => ['create', 'edit']]);
+  Route::resource('todo', 'Api\TodoController', ['except' => ['create', 'edit', 'destroy']]);
+  Route::post('todo/delete', 'Api\TodoController@deleteData');
 });
