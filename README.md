@@ -1,4 +1,4 @@
-# todo-app(実装中)
+# todo-app
 TODOアプリを作ってみました。
 # 概要
 主に
