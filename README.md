@@ -1,3 +1,15 @@
+<div align="center" class="images-row mceNonEditable" >
+<img src="https://upload.wikimedia.org/wikipedia/commons/archive/3/34/20200802160428%21Android_Studio_icon.svg" width-"400">
+<img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400">
+<img src="https://www.seekicon.com/free-icon-download/kotlin-icon_2.svg" width="100">
+</div>
+<p >
+<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
+</p>
+
 # todo-app
 TODOアプリを作ってみました。</br>
 `下に動画や設計書があるので是非ご覧ください`
